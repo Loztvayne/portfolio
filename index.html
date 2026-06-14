@@ -1,66 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loztvayne Systems</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Systemy i Frameworki</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --dark-blue: #1a2a40;
+            --accent-blue: #2c5364;
+            --text-color: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
-  <style>
-    body {
-      margin: 0;
-      background: #0B1020;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    h1 {
-      font-size: 48px;
-    }
+        /* Nawigacja */
+        nav {
+            background: rgba(26, 42, 64, 0.8);
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-blue);
+        }
 
-    p {
-      color: #A0AEC0;
-    }
+        /* Główna sekcja */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #3B82F6;
-      border: none;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+        h1 { font-size: 3rem; margin: 1rem 0; letter-spacing: 2px; }
+        h2 { font-weight: 300; opacity: 0.8; }
 
-    button:hover {
-      background: #60A5FA;
-    }
-  </style>
+        /* Box z guzikami */
+        .btn-container {
+            margin-top: 3rem;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-btn {
+            width: 30%; /* Zgodnie z wytycznymi 0.30 (30%) */
+            padding: 1.2rem;
+            background: var(--dark-blue);
+            color: white;
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: block;
+            box-shadow: var(--shadow);
+        }
+
+        .action-btn:hover {
+            background: var(--accent-blue);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(44, 83, 100, 0.4);
+        }
+
+        .action-btn:active {
+            transform: translateY(2px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: #050505;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--dark-blue);
+        }
+
+        /* Responsywność */
+        @media (max-width: 768px) {
+            .action-btn { width: 80%; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-  <div class="hero">
-    <h1>I translate your ideas into Lua.</h1>
-    <p>Reliable systems. Clean architecture. Fast delivery.</p>
+    <nav>
+        <h2>Portfolio Dev</h2>
+    </nav>
 
-    <button onclick="document.getElementById('systems').scrollIntoView()">
-      View Systems
-    </button>
-  </div>
+    <main>
+        <h2>Witaj w sekcji</h2>
+        <h1>Development & Architecture</h1>
+        <h2>Zaawansowane rozwiązania</h2>
 
-  <div id="systems" style="padding:100px; text-align:center;">
-    <h2>Systems</h2>
-    <p>Data Saving • Inventory • Pets • Quests • Trading</p>
-  </div>
+        <div class="btn-container">
+            <a href="#" class="action-btn">Scripts/Systems/Frameworks</a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Twoje Imię | All Rights Reserved
+    </footer>
 
 </body>
 </html>
