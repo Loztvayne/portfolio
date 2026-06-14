@@ -1,1 +1,336 @@
 
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loztvayne | Scripts & Systems</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #030305;
+            --bg-surface: rgba(18, 20, 38, 0.65);
+            --blue-dark: #0a0f24;
+            --blue-accent: #2563eb;
+            --blue-glow: rgba(37, 99, 235, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Ustawienie płynnego scrollowania dla całej strony */
+        html {
+            scroll-behavior: smooth;
+            /* Scroll padding zapobiega ucinaniu tytułów przez górną nawigację */
+            scroll-padding-top: 120px; 
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #111836 0%, transparent 50%);
+        }
+
+        /* --- GŁÓWNA NAWIGACJA (TOP) --- */
+        nav.top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-surface);
+            padding: 1.25rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 100;
+        }
+
+        .top-nav h2 {
+            font-weight: 300;
+            color: var(--text-secondary);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            width: 100%; 
+        }
+
+        /* --- LAYOUT Z BOCZNYM MENU --- */
+        .page-wrapper {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 8rem 2rem 4rem; /* Górny padding omija top-nav */
+            gap: 4rem; /* Odstęp między menu a contentem */
+        }
+
+        /* --- BOCZNE MENU (SIDEBAR) --- */
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        /* Sticky sprawia, że menu zjeżdża w dół razem z użytkownikiem */
+        .sidebar-menu {
+            position: sticky;
+            top: 120px; 
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: rgba(10, 15, 36, 0.4);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-menu h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--blue-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            padding: 0.5rem 0;
+            border-left: 2px solid transparent;
+            padding-left: 10px;
+        }
+
+        .sidebar-menu a:hover {
+            color: var(--text-primary);
+            border-left-color: var(--blue-accent);
+            transform: translateX(5px);
+        }
+
+        /* --- GŁÓWNA ZAWARTOŚĆ --- */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem; /* Odstęp między poszczególnymi modułami */
+        }
+
+        /* --- POJEDYNCZA SEKCJA MODUŁU --- */
+        .module-section {
+            display: flex;
+            align-items: center;
+            gap: 3rem; /* Odstęp między tekstem a wideo */
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .module-section:hover {
+            border-color: rgba(37, 99, 235, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Lewa strona - Tekst */
+        .module-text {
+            flex: 1;
+        }
+
+        .module-text h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, var(--blue-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .module-text h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--blue-accent);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .module-text ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .module-text li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        /* Stylowane kropki listy */
+        .module-text li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--blue-accent);
+            box-shadow: 0 0 10px var(--blue-accent);
+        }
+
+        /* Prawa strona - Wideo */
+        .module-media {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .module-media video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            background: var(--blue-dark); /* Placeholder color przed załadowaniem */
+        }
+
+        /* --- STOPKA --- */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-glass);
+            margin-top: auto; /* Dopycha stopkę na sam dół */
+        }
+
+        /* --- RESPONSYWNOŚĆ --- */
+        @media (max-width: 1024px) {
+            .page-wrapper {
+                flex-direction: column; /* Menu idzie nad content */
+                padding-top: 6rem;
+            }
+            .sidebar {
+                width: 100%;
+            }
+            .sidebar-menu {
+                position: relative; /* Wyłącza sticky na małych ekranach */
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .module-section {
+                flex-direction: column; /* Wideo spada pod tekst */
+                padding: 1.5rem;
+            }
+            .module-media video {
+                max-width: 100%;
+            }
+        }
+
+        /* --- ANIMACJE (DODANE) --- */
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+/* Klasy do animowania elementów */
+.animate-down { animation: slideDown 0.8s ease-out forwards; }
+.animate-up { 
+    opacity: 0; 
+    transform: translateY(20px); 
+    animation: fadeInUp 1s ease-out forwards; 
+}
+
+/* Opóźnienia dla płynności */
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav animate-down">
+        <h2 class="animate-down">Scripts & Systems</h2>
+    </nav>
+    
+    <div class="page-wrapper">
+        <aside class="sidebar animate-up delay-1">
+            <div class="sidebar-menu">
+                <h3>Modules</h3>
+                <a href="#combat-system">Combat System</a>
+                <a href="#inventory-system">Inventory System</a>
+                <div style="margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1rem;">
+                    <a href="index.html" style="color: var(--blue-accent); font-size: 0.9rem;">&larr; Back to Home</a>
+                </div>
+            </div>
+        </aside>
+    
+        <main class="content-area">
+            <section id="combat-system" class="module-section animate-up delay-2">
+                <div class="module-text">
+                    <h3>Combat System</h3>
+                    <h4>This framework will:</h4>
+                    <ul>
+                        <li>Calculate complex damage output based on stats</li>
+                        <li>Handle hitbox detection and collision rendering</li>
+                        <li>Manage weapon cooldowns and combo states</li>
+                        <li>Sync animations smoothly with server events</li>
+                    </ul>
+                </div>
+                <div class="module-media">
+                    <video src="twoje-wideo-combat.mp4" autoplay loop muted playsinline></video>
+                </div>
+            </section>
+    
+            <section id="inventory-system" class="module-section animate-up delay-3">
+                <div class="module-text">
+                    <h3>Inventory System</h3>
+                    <h4>This framework will:</h4>
+                    <ul>
+                        <li>Save data securely using DataStores</li>
+                        <li>Handle drag & drop UI interactions</li>
+                        <li>Support item stacking and weight limits</li>
+                        <li>Equip items directly to the character model</li>
+                    </ul>
+                </div>
+                <div class="module-media">
+                    <video src="twoje-wideo-inventory.mp4" autoplay loop muted playsinline></video>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2026 Loztvayne | All Rights Reserved
+    </footer>
+
+</body>
+</html>
