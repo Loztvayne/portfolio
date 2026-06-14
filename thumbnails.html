@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loztvayne | Thumbnails</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Nowoczesna, głęboka paleta kolorów */
+            --bg-base: #030305;
+            --bg-surface: rgba(18, 20, 38, 0.65);
+            --blue-dark: #0a0f24;
+            --blue-accent: #2563eb;
+            --blue-glow: rgba(37, 99, 235, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            
+            /* Płynne przejścia */
+            --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #111836 0%, transparent 50%);
+        }
+
+        /* --- NAWIGACJA --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-surface);
+            padding: 1.25rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 100;
+            animation: slideDown 0.8s ease-out forwards;
+        }
+
+        #id1h2 {
+            font-weight: 300;
+            color: var(--text-secondary);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            width: 100%; 
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* --- SEKCJA GŁÓWNA --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            margin: 1.5rem 0;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            background: linear-gradient(to top, #ffffff 0%, #718096 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        #id2h2 {
+            font-weight: 500;
+            color: var(--blue-accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .subtitle {
+            font-weight: 300;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* --- GUZIK POWROTU --- */
+        .action-btn {
+            position: relative;
+            width: auto; 
+            padding: 1rem 2.5rem;
+            background: rgba(10, 15, 36, 0.8);
+            color: var(--text-primary);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, var(--blue-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+            border-radius: inherit;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-4px);
+            border-color: var(--blue-accent);
+            box-shadow: 0 10px 40px var(--blue-glow), 
+                        inset 0 0 20px rgba(37, 99, 235, 0.2);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .action-btn:hover::before {
+            opacity: 0.1;
+        }
+
+        /* --- STOPKA --- */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-glass);
+            animation: fadeIn 1.5s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        /* --- ANIMACJE --- */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2 id="id1h2">Thumbnails</h2>
+    </nav>
+
+    <main>
+        <h2 id="id2h2">Work in progress</h2>
+        <h1>This section will be expanded later</h1>
+        <p class="subtitle">I'm currently preparing the materials and code for this part of my portfolio. Check back again soon!</p>
+
+        <a href="index.html" class="action-btn">Take me back to home page</a>
+    </main>
+
+    <footer>
+        &copy; 2026 Loztvayne | All Rights Reserved
+    </footer>
+
+</body>
+</html>
