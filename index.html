@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loztvayne Systems</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0B1020;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+    }
+
+    p {
+      color: #A0AEC0;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #3B82F6;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #60A5FA;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <h1>I translate your ideas into Lua.</h1>
+    <p>Reliable systems. Clean architecture. Fast delivery.</p>
+
+    <button onclick="document.getElementById('systems').scrollIntoView()">
+      View Systems
+    </button>
+  </div>
+
+  <div id="systems" style="padding:100px; text-align:center;">
+    <h2>Systems</h2>
+    <p>Data Saving • Inventory • Pets • Quests • Trading</p>
+  </div>
+
+</body>
+</html>
