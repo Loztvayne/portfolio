@@ -66,15 +66,15 @@
         }
 
         /* --- LAYOUT Z BOCZNYM MENU --- */
-        .page-wrapper {
-            display: flex;
-            flex: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 8rem 2rem 4rem; /* Górny padding omija top-nav */
-            gap: 4rem; /* Odstęp między menu a contentem */
-        }
+    .page-wrapper {
+    display: flex;
+    flex: 1;
+    max-width: 80vw;
+    margin: 0 auto;
+    width: 100%;
+    padding: 8rem 2rem 4rem;
+    gap: 4rem;
+}
 
         /* --- BOCZNE MENU (SIDEBAR) --- */
         .sidebar {
@@ -149,8 +149,8 @@
 
         /* Lewa strona - Tekst */
         .module-text {
-            flex: 1;
-        }
+    flex: 0.8;
+}
 
         .module-text h3 {
             font-size: 2.5rem;
@@ -200,19 +200,19 @@
 
         /* Prawa strona - Wideo */
         .module-media {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
 
-        .module-media video {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 12px;
-            border: 1px solid rgba(37, 99, 235, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            background: var(--blue-dark); /* Placeholder color przed załadowaniem */
-        }
+       .module-media iframe {
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
 
         /* --- STOPKA --- */
         footer {
