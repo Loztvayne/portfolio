@@ -1,0 +1,711 @@
+ <!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loztvayne | Portfolio & Systems</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #000000;
+            --bg-surface: #0a0a0d;
+            --bg-surface-hover: #121216;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --primary-gradient: linear-gradient(90deg, #003366 0%, #0f2a53 70%);
+            --text-primary: #f2f2f2;
+            --text-secondary: #999999;
+            --success: #10b981;
+            
+            /* Gold Accents */
+            --gold-primary: #ffd700;
+            --gold-secondary: #ffaa00;
+            --gold-gradient: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #ffaa00 100%);
+            --gold-glow: rgba(255, 215, 0, 0.4);
+            
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* HEADER */
+        header {
+            padding: 22px 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        @keyframes periodicPulse {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.04) translateY(-2px); }
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: periodicPulse 4s ease-in-out infinite;
+            transition: transform 0.2s ease, filter 0.2s ease, background 0.5s ease;
+        }
+
+        .hero-title:hover {
+            transform: scale(1.06) translateY(-2px);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+            animation-play-state: paused;
+        }
+
+        .hero-title:active {
+            transform: scale(0.97);
+        }
+
+        /* DISCORD ICON BUTTON */
+        .discord-btn {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.35);
+            animation: periodicPulse 4s ease-in-out infinite 0.5s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .discord-btn:hover {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+            animation-play-state: paused;
+        }
+
+        .discord-btn:active {
+            transform: scale(0.95);
+        }
+
+        .discord-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+        }
+
+        /* TOAST FEEDBACK */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s var(--ease-smooth);
+            z-index: 200;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* MAIN APP WRAPPER */
+        .app-container {
+            flex: 1;
+            display: flex;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 50px;
+            gap: 40px;
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            flex: 0.9;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+        }
+
+        .project-link {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 18px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .project-link:hover {
+            background: var(--bg-surface-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-link.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.35);
+        }
+
+        .project-link.active .project-name,
+        .project-link.active .project-meta {
+            color: #ffffff;
+        }
+
+        /* SPECIAL OFFER LINK IN SIDEBAR (GOLD STYLE) */
+        .project-link.special-link {
+            border-color: rgba(255, 215, 0, 0.25);
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.04), rgba(255, 215, 0, 0.01));
+        }
+
+        .project-link.special-link .project-name {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .project-link.special-link:hover {
+            border-color: rgba(255, 215, 0, 0.7);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .project-link.special-link.active {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 255, 255, 0.05));
+            border-color: #ffd700;
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        .project-link.special-link.active .project-name {
+            -webkit-text-fill-color: #ffffff;
+        }
+
+        /* GOLD SPECIAL OFFER BADGE IN SIDEBAR */
+        .gold-badge {
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 1px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px var(--gold-glow);
+            animation: goldGlow 2.5s ease-in-out infinite alternate;
+        }
+
+        .link-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .project-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .project-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* CONTENT DISPLAY */
+        .content-area {
+            flex: 1.8;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            overflow-y: auto;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .project-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: #ffffff;
+        }
+
+        .project-title.gold-title {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+        }
+
+        /* GOLD CAMPAIGN HIGHLIGHT BOX */
+        .campaign-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .campaign-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: skewX(-25deg);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            100% { left: 200%; }
+        }
+
+        @keyframes goldGlow {
+            0% { filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3)); }
+            100% { filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .campaign-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .campaign-price {
+            font-size: 36px;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.4));
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            animation: periodicPulse 3s ease-in-out infinite;
+        }
+
+        .campaign-price:hover {
+            transform: scale(1.08);
+            animation-play-state: paused;
+        }
+
+        .campaign-price:active {
+            transform: scale(0.95);
+        }
+
+        /* FEATURE LIST */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .feature-item {
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .feature-item.gold-bullet::before {
+            background-color: #ffd700;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+        }
+
+        /* VIDEO FRAME */
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ACTIVE GOLD SECTION STYLES */
+        body.gold-mode {
+            background-color: #060501;
+        }
+
+        body.gold-mode .hero-title {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+        }
+
+        body.gold-mode header {
+            border-bottom-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 4px 25px rgba(255, 215, 0, 0.1);
+        }
+
+        body.gold-mode .content-area {
+            border-color: rgba(255, 215, 0, 0.35);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.12);
+        }
+
+        body.gold-mode .feature-item::before {
+            background-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .app-container {
+                flex-direction: column-reverse;
+                padding: 20px;
+            }
+            .sidebar, .content-area {
+                width: 100%;
+            }
+            header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hero-title" id="copy-discord-title">LOZTVAYNE</div>
+        <button class="discord-btn" id="copy-discord-icon" title="Copy Discord Username">
+            <svg viewBox="0 0 127.14 96.36">
+                <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.65-27.28-4.43-51.07-20.83-72.18ZM42.45,65.69C36.18,65.69,31,60,31,53s5.18-12.72,11.45-12.72S53.9,46,53.88,53,48.71,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.18-12.72,11.45-12.72S96.15,46,96.13,53,91,65.69,84.69,65.69Z"/>
+            </svg>
+        </button>
+    </header>
+
+    <div class="toast" id="toast">DISCORD USERNAME COPIED</div>
+
+    <div class="app-container">
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="project-list" aria-label="Projects"></nav>
+
+        <!-- ACTIVE CONTENT VIEW -->
+        <main class="content-area" id="project-content"></main>
+    </div>
+
+    <footer>
+        &copy; 2026 LOZTVAYNE. All rights reserved.
+    </footer>
+
+    <script>
+        const DISCORD_HANDLE = "loztvayne";
+
+        const PROJECTS = [
+            {
+                navName: "SYSTEM NOT DONE IN 3H = SYSTEM FOR FREE",
+                title: "SYSTEM NOT DONE IN 3H = SYSTEM FOR FREE",
+                date: "SPECIAL OFFER",
+                isCampaign: true,
+                price: "$75",
+                description: "Need a high-performance system built fast? Take advantage of the 3-hour speed run guarantee with absolute transparency and zero risk.",
+                rules: [
+                    "1-Hour Infrastructure Audit: Before starting, you add me to your game so I can review your codebase and infrastructure setup.",
+                    "Definition of Done: Before any work begins, we both explicitly agree on when the system is considered 100% completed.",
+                    "Scope Protection: Requests that are unreasonable (e.g. 'basically build me a whole game') will be respectfully declined.",
+                    "The Guarantee: Once we start the timer, if I finish your system within 3 hours = You pay $75. If I don't finish in time = You get the entire system finished on me."
+                ],
+                videoUrl: "" 
+            },
+            {
+                navName: "Pet Framework",
+                title: "Pet System & Egg Framework",
+                date: "2026.10",
+                features: [
+                    "Fully customizable egg opening animations with unique effects for each rarity.",
+                    "Advanced progression systems including Hard Pity, Soft Pity and Global Pity support.",
+                    "Built-in pet index with collection tracking and undiscovered entries.",
+                    "Custom pet states and animations including Walking, Standing and Flying behaviors.",
+                    "Client-side movement powered by BulkMoveTo for smooth performance on all devices.",
+                    "Raycast-based positioning keeping pets naturally aligned with terrain.",
+                    "Complete pet management: Equip, Equip Best, Mass Delete and Upgrades.",
+                    "Optimized for large pet counts without frame drops."
+                ],
+                videoUrl: "https://www.youtube.com/embed/VizvkHjo8cg"
+            },
+            {
+                navName: "First Person Combat",
+                title: "First Person Combat & Movement System",
+                date: "2026.11",
+                features: [
+                    "Fast-paced, Rivals-inspired fluid movement mechanics designed for competitive gameplay.",
+                    "Robust client-side prediction system ensuring zero-delay responsiveness and smooth local feedback.",
+                    "Modular weapon framework supporting completely different weapon types, firing styles and stats.",
+                    "Immersive first-person custom rolling animations and dynamic camera handling."
+                ],
+                videoUrl: "https://www.youtube.com/embed/YqZUQAAFkEA?rel=0"
+            },
+            {
+                navName: "Safe Data & Inventory",
+                title: "Data Saving + Inventory Framework",
+                date: "2026.09",
+                features: [
+                    "Securely save and load player data using ProfileStore for maximum reliability.",
+                    "Automatically synchronize data with UI elements and leaderstats in real time.",
+                    "Built with Object-Oriented Programming for clean, scalable and maintainable code.",
+                    "Flexible data structures supporting stackable items and custom inventories.",
+                    "Automatic session handling and safe data release to prevent data corruption.",
+                    "Simple API for developers to modify and access player data with minimal code."
+                ],
+                videoUrl: "https://www.youtube.com/embed/ACiXqp8CWJw"
+            },
+            {
+                navName: "Combat Framework",
+                title: "Combat and Abilities Framework",
+                date: "2026.08",
+                features: [
+                    "Raycast-based hit detection for precise and reliable hit registration.",
+                    "Fully modular architecture designed for easy expansion and custom weapons.",
+                    "Automatically synchronize combat states and cooldowns with UI elements.",
+                    "Support for melee attacks, abilities, combo chains and projectile systems.",
+                    "Advanced calculations supporting critical hits, backstabs and custom modifiers."
+                ],
+                videoUrl: "https://www.youtube.com/embed/LTWNF-7hb3k"
+            },
+            {
+                navName: "AI Framework",
+                title: "Dynamic AI State Machine",
+                date: "2026.07",
+                features: [
+                    "Dynamic distance-based finite state machine for intelligent decision making.",
+                    "Stochastic reaction latency to create natural and human-like response times.",
+                    "Close-quarters micro-flanking and adaptive positioning behaviors.",
+                    "Object-Oriented memory systems for clean, maintainable state tracking.",
+                    "Customizable states including Idle, Patrol, Chase, Attack and Retreat."
+                ],
+                videoUrl: "https://www.youtube.com/embed/q_O5Fr7EL2Y"
+            },
+            {
+                navName: "Matchmaking",
+                title: "Cross Server Matchmaking System",
+                date: "2026.06",
+                features: [
+                    "Match players across multiple servers for seamless and scalable gameplay.",
+                    "Fully customizable architecture supporting any game mode and team size.",
+                    "Automatically create and manage reserved servers for isolated matches.",
+                    "Flexible queue configurations, matchmaking rules and priority systems."
+                ],
+                videoUrl: "https://www.youtube.com/embed/d05YCsxEjeM"
+            }
+        ];
+
+        const listContainer = document.querySelector("#project-list");
+        const contentContainer = document.querySelector("#project-content");
+        const copyTitleBtn = document.querySelector("#copy-discord-title");
+        const copyIconBtn = document.querySelector("#copy-discord-icon");
+        const toast = document.querySelector("#toast");
+        let toastTimeout;
+        let activeIndex = 0;
+
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>"']/g, c => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+            })[c]);
+        }
+
+        function getYoutubeEmbed(url) {
+            if (!url) return "";
+            try {
+                const parsed = new URL(url);
+                let id = "";
+                if (parsed.hostname.includes("youtu.be")) id = parsed.pathname.slice(1);
+                if (parsed.hostname.includes("youtube.com")) {
+                    id = parsed.searchParams.get("v") || "";
+                    if (!id && parsed.pathname.includes("/embed/")) id = parsed.pathname.split("/embed/")[1].split("/")[0];
+                }
+                if (!/^[\w-]{11}$/.test(id)) return "";
+                const isLocal = window.location.protocol === "file:";
+                const origin = (!isLocal && window.location.origin && window.location.origin !== "null") 
+                    ? `&origin=${encodeURIComponent(window.location.origin)}` 
+                    : "";
+                return `https://www.youtube-nocookie.com/embed/${id}?enablejsapi=1&rel=0&modestbranding=1${origin}`;
+            } catch { return ""; }
+        }
+
+        function renderList() {
+            listContainer.innerHTML = PROJECTS.map((p, i) => {
+                const isSpecial = p.date === "SPECIAL OFFER";
+                const metaClass = isSpecial ? "gold-badge" : "project-meta";
+                const linkClass = isSpecial ? "special-link" : "";
+
+                return `
+                <button class="project-link ${linkClass} ${i === activeIndex ? 'active' : ''}" type="button" data-index="${i}">
+                    <div class="link-info">
+                        <span class="project-name">${escapeHTML(p.navName)}</span>
+                        <span class="${metaClass}">${escapeHTML(p.date)}</span>
+                    </div>
+                </button>
+            `}).join("");
+
+            listContainer.querySelectorAll(".project-link").forEach(btn => {
+                const idx = Number(btn.dataset.index);
+
+                btn.addEventListener("click", () => {
+                    activeIndex = idx;
+                    renderList();
+                    renderContent(activeIndex);
+                });
+            });
+        }
+
+        function renderContent(index) {
+            const p = PROJECTS[index];
+            if (!p) return;
+
+            // Przełączanie motywu całej strony na złoty, gdy jesteśmy w sekcji SPECIAL OFFER
+            if (p.isCampaign) {
+                document.body.classList.add("gold-mode");
+            } else {
+                document.body.classList.remove("gold-mode");
+            }
+
+            let mainBody = "";
+            const embed = getYoutubeEmbed(p.videoUrl);
+            const videoHtml = embed 
+                ? `<div class="video-container"><iframe src="${embed}" referrerpolicy="strict-origin-when-cross-origin" title="${escapeHTML(p.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
+                : "";
+
+            const titleClass = p.isCampaign ? "project-title gold-title" : "project-title";
+
+            if (p.isCampaign) {
+                mainBody = `
+                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.6;">${escapeHTML(p.description || "")}</p>
+                    ${videoHtml}
+                    <div class="campaign-box" id="special-offer-box">
+                        <div>
+                            <div class="campaign-title">System Done in 3 Hours</div>
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Or you get system for free.</div>
+                        </div>
+                        <div class="campaign-price" id="copy-discord-price">${p.price}</div>
+                    </div>
+                    <ul class="feature-list">
+                        ${p.rules.map(rule => `<li class="feature-item gold-bullet">${escapeHTML(rule)}</li>`).join("")}
+                    </ul>
+                `;
+            } else {
+                mainBody = `
+                    ${videoHtml}
+                    <ul class="feature-list">
+                        ${p.features.map(f => `<li class="feature-item">${escapeHTML(f)}</li>`).join("")}
+                    </ul>
+                `;
+            }
+
+            contentContainer.innerHTML = `
+                <h1 class="${titleClass}">${escapeHTML(p.title)}</h1>
+                ${mainBody}
+            `;
+
+            if (p.isCampaign) {
+                const priceBtn = document.querySelector("#copy-discord-price");
+                if (priceBtn) priceBtn.addEventListener("click", copyDiscord);
+            }
+        }
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add("show");
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove("show"), 2000);
+        }
+
+        async function copyDiscord() {
+            try {
+                await navigator.clipboard.writeText(DISCORD_HANDLE);
+                showToast("DISCORD USERNAME COPIED");
+            } catch {
+                showToast("CLIPBOARD ACCESS FAILED");
+            }
+        }
+
+        copyTitleBtn.addEventListener("click", copyDiscord);
+        copyIconBtn.addEventListener("click", copyDiscord);
+
+        renderList();
+        renderContent(0);
+    </script>
+</body>
+</html>
